@@ -1,3 +1,13 @@
 .pongCanvas{
+    padding: 0;
+    margin: auto;
+    display: block;
+    width: 900px;
+    height: 450px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     border:1px solid black;
 }

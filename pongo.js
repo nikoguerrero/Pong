@@ -2,52 +2,87 @@ console.log('hello world');
 
 const canvas = document.getElementById('canvas');
 const canvContext = canvas.getContext('2d');
-let compY = 6;
-let compVelocity = 1;
-let playerY = 6;
-let playerVelocity = 0;
+const canvasWidth = canvas.width;
+const canvasHeight = canvas.height;
+const globalVeloc = 4;
 
+let cpuPaddle = {
+    x: 30,
+    y: 6,
+    width: 15,
+    height: 90,
+    velocity: 1
+};
+
+let playerPaddle = {
+    x: 855,
+    y: 6,
+    width: 15, 
+    height: 90,
+    velocity: 0
+};
+
+let ball = {
+    x: canvasWidth / 2 - 7.5,
+    y: canvasHeight / 2 - 7.5,
+    width: 15,
+    height: 15,
+    velocX: Math.random() * 2 - 1,
+    velocY: Math.random() * 2 - 1
+};
+
+let paddleLimit = {
+    top: 5,
+    bottom: 355
+};
 
 function draw(){
-    canvContext.clearRect(0, 0, 300, 150);
-    canvContext.fillRect(30, compY, 5, 30);
-    canvContext.fillRect(265, playerY, 5, 30);
-    canvContext.fillRect(147.5, 72.5, 5, 5);
-    setTimeout(draw, 16.66);
-    compY+= compVelocity;
+    canvContext.clearRect(0, 0, canvasWidth, canvasHeight);
+    canvContext.fillRect(cpuPaddle.x, cpuPaddle.y, cpuPaddle.width, cpuPaddle.height);
+    canvContext.fillRect(playerPaddle.x, playerPaddle.y, playerPaddle.width, playerPaddle.height);
+    canvContext.fillRect(ball.x, ball.y, ball.width, ball.height);
+    cpuPaddle.y += cpuPaddle.velocity * globalVeloc;
 
-    if(compY === 115 || compY === 5) {
-        compVelocity *= -1;
+    if(cpuPaddle.y > paddleLimit.bottom || cpuPaddle.y < paddleLimit.top) {
+        cpuPaddle.velocity *= -1;
     }
 
-    playerY += playerVelocity;
+    playerPaddle.y += playerPaddle.velocity * globalVeloc;
 
-    if(playerY > 114) {
-        playerY = 114;
-    } else if(playerY < 6) {
-        playerY = 6;
+    if(playerPaddle.y > paddleLimit.bottom) {
+        playerPaddle.y = paddleLimit.bottom;
+    } else if(playerPaddle.y < paddleLimit.top) {
+        playerPaddle.y = paddleLimit.top;
     }
+
+    ball.x += ball.velocX * globalVeloc;
+    ball.y += ball.velocY * globalVeloc;
+
+    if(ball.y > canvasHeight - ball.height || ball.y < 0) {
+        ball.velocY *= -1;
+    } 
+    setTimeout(draw, 16.66); // 16.66 = 60fps
 }
 draw();
 
 window.addEventListener("keydown", (event) => {
    switch(event.key) {
        case 'ArrowDown':
-           playerVelocity = 1;
-           break;
+            playerPaddle.velocity = 1;
+            break;
        case 'ArrowUp':
-           playerVelocity = -1;
-           break;
+            playerPaddle.velocity = -1;
+            break;
    }
 });
 
 window.addEventListener("keyup", (event) => {
     switch(event.key) {
         case 'ArrowDown':
-            playerVelocity = 0;
+            playerPaddle.velocity = 0;
             break;
         case 'ArrowUp':
-            playerVelocity = 0;
+            playerPaddle.velocity = 0;
             break;
     }
 });
