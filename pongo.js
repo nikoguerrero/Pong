@@ -27,8 +27,8 @@ let ball = {
     y: canvasHeight / 2 - 7.5,
     width: 15,
     height: 15,
-    velocX: Math.random() * 2 - 1,
-    velocY: Math.random() * 2 - 1
+    velocX: 0,
+    velocY: 0
 };
 
 let paddleLimit = {
@@ -76,8 +76,15 @@ function update() {
 function restartBall() {
     ball.x = canvasWidth / 2 - 7.5;
     ball.y = canvasHeight / 2 - 7.5;
-    ball.velocX = 0;
-    ball.velocY = 0;
+    ball.velocX = Math.max(Math.random(), 0.8);
+    if(Math.random() > 0.5) {
+        ball.velocX *= -1;
+    }
+    ball.velocY = Math.max(Math.random(), 0.8);
+    if(Math.random() > 0.5) {
+        ball.velocY *= -1;
+    }
+
 }
 
 
@@ -119,6 +126,7 @@ window.addEventListener("keyup", (event) => {
 });
 
 window.addEventListener("load", () => {
+    restartBall();
     mainLoop();
 });
 
