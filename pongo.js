@@ -11,7 +11,8 @@ let cpuPaddle = {
     y: 6,
     width: 15,
     height: 90,
-    velocity: 1
+    velocity: 1,
+    score: 0
 };
 
 let playerPaddle = {
@@ -19,7 +20,8 @@ let playerPaddle = {
     y: 6,
     width: 15, 
     height: 90,
-    velocity: 0
+    velocity: 0,
+    score: 0
 };
 
 let ball = {
@@ -67,8 +69,12 @@ function update() {
     }
 
     if(ball.x > canvasWidth) {
+        cpuPaddle.score++;
+        console.log(cpuPaddle.score);
         restartBall();
     } else if (ball.x < 0) {
+        playerPaddle.score++;
+        console.log(playerPaddle.score);
         restartBall();
     }
 }
@@ -84,7 +90,6 @@ function restartBall() {
     if(Math.random() > 0.5) {
         ball.velocY *= -1;
     }
-
 }
 
 
