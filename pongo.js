@@ -62,6 +62,7 @@ function update() {
 
     if(playerPaddle.x < ball.x + ball.width && playerPaddle.x + playerPaddle.width > ball.x && playerPaddle.y < ball.y + ball.height && playerPaddle.y + playerPaddle.height > ball.y) {
         ball.velocX *= -1;
+        
     }
 
     if(cpuPaddle.x < ball.x + ball.width && cpuPaddle.x + cpuPaddle.width > ball.x && cpuPaddle.y < ball.y + ball.height && cpuPaddle.y + cpuPaddle.height > ball.y) {
@@ -98,6 +99,9 @@ function draw(){
     canvContext.fillRect(cpuPaddle.x, cpuPaddle.y, cpuPaddle.width, cpuPaddle.height);
     canvContext.fillRect(playerPaddle.x, playerPaddle.y, playerPaddle.width, playerPaddle.height);
     canvContext.fillRect(ball.x, ball.y, ball.width, ball.height);
+    canvContext.fillText(cpuPaddle.score, 400, 50);
+    canvContext.fillText(playerPaddle.score, 500, 50);
+    canvContext.font = '30px Consolas';
     
 }
 
