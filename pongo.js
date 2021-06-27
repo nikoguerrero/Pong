@@ -1,4 +1,4 @@
-console.log('hello world');
+
 
 const canvas = document.getElementById('canvas');
 const canvContext = canvas.getContext('2d');
@@ -36,11 +36,7 @@ let paddleLimit = {
     bottom: 355
 };
 
-function draw(){
-    canvContext.clearRect(0, 0, canvasWidth, canvasHeight);
-    canvContext.fillRect(cpuPaddle.x, cpuPaddle.y, cpuPaddle.width, cpuPaddle.height);
-    canvContext.fillRect(playerPaddle.x, playerPaddle.y, playerPaddle.width, playerPaddle.height);
-    canvContext.fillRect(ball.x, ball.y, ball.width, ball.height);
+function update() {
     cpuPaddle.y += cpuPaddle.velocity * globalVeloc;
 
     if(cpuPaddle.y > paddleLimit.bottom || cpuPaddle.y < paddleLimit.top) {
@@ -69,12 +65,34 @@ function draw(){
     if(cpuPaddle.x < ball.x + ball.width && cpuPaddle.x + cpuPaddle.width > ball.x && cpuPaddle.y < ball.y + ball.height && cpuPaddle.y + cpuPaddle.height > ball.y) {
         ball.velocX *= -1;
     }
-    setTimeout(draw, 16.66); // 16.66 = 60fps
+
+    if(ball.x > canvasWidth) {
+        restartBall();
+    } else if (ball.x < 0) {
+        restartBall();
+    }
 }
-draw();
+
+function restartBall() {
+    ball.x = canvasWidth / 2 - 7.5;
+    ball.y = canvasHeight / 2 - 7.5;
+    ball.velocX = 0;
+    ball.velocY = 0;
+}
+
+
+function draw(){
+    canvContext.clearRect(0, 0, canvasWidth, canvasHeight);
+    canvContext.fillRect(cpuPaddle.x, cpuPaddle.y, cpuPaddle.width, cpuPaddle.height);
+    canvContext.fillRect(playerPaddle.x, playerPaddle.y, playerPaddle.width, playerPaddle.height);
+    canvContext.fillRect(ball.x, ball.y, ball.width, ball.height);
+    
+}
 
 function mainLoop() {
-    
+    update();
+    draw();
+    setTimeout(mainLoop, 16.66); // 16.66 = 60fps
 }
 
 
@@ -100,6 +118,8 @@ window.addEventListener("keyup", (event) => {
     }
 });
 
-
+window.addEventListener("load", () => {
+    mainLoop();
+});
 
 
