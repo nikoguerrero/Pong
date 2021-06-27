@@ -61,9 +61,22 @@ function draw(){
     if(ball.y > canvasHeight - ball.height || ball.y < 0) {
         ball.velocY *= -1;
     } 
+
+    if(playerPaddle.x < ball.x + ball.width && playerPaddle.x + playerPaddle.width > ball.x && playerPaddle.y < ball.y + ball.height && playerPaddle.y + playerPaddle.height > ball.y) {
+        ball.velocX *= -1;
+    }
+
+    if(cpuPaddle.x < ball.x + ball.width && cpuPaddle.x + cpuPaddle.width > ball.x && cpuPaddle.y < ball.y + ball.height && cpuPaddle.y + cpuPaddle.height > ball.y) {
+        ball.velocX *= -1;
+    }
     setTimeout(draw, 16.66); // 16.66 = 60fps
 }
 draw();
+
+function mainLoop() {
+    
+}
+
 
 window.addEventListener("keydown", (event) => {
    switch(event.key) {
@@ -86,6 +99,7 @@ window.addEventListener("keyup", (event) => {
             break;
     }
 });
+
 
 
 
