@@ -101,8 +101,8 @@ function draw(){
     canvContext.fillRect(ball.x, ball.y, ball.width, ball.height);
     canvContext.font = '48px game font';
     canvContext.textAlign = 'center';
-    canvContext.fillText(cpuPaddle.score, 400, 80);
-    canvContext.fillText(playerPaddle.score, 500, 80);
+    canvContext.fillText(cpuPaddle.score, canvasWidth / 4, 80);
+    canvContext.fillText(playerPaddle.score, canvasWidth / 4 + canvasWidth / 2, 80);
     canvContext.lineWidth = 5;
     canvContext.beginPath();
     canvContext.setLineDash([20, 20]);
