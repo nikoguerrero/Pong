@@ -61,12 +61,31 @@ function update() {
     } 
 
     if(playerPaddle.x < ball.x + ball.width && playerPaddle.x + playerPaddle.width > ball.x && playerPaddle.y < ball.y + ball.height && playerPaddle.y + playerPaddle.height > ball.y) {
-        ball.velocX *= -1;
-        
+        if (Math.abs(ball.x + ball.width - playerPaddle.x) <= Math.abs(ball.velocX * globalVeloc)) {
+            ball.velocX *= -1;
+        } else {
+            if (ball.y > playerPaddle.y) {
+                ball.y += globalVeloc;
+                ball.velocY = globalVeloc * 0.2;
+            } else {
+                ball.y -= globalVeloc;
+                ball.velocY = -globalVeloc * 0.2;
+            }
+        }
     }
 
     if(cpuPaddle.x < ball.x + ball.width && cpuPaddle.x + cpuPaddle.width > ball.x && cpuPaddle.y < ball.y + ball.height && cpuPaddle.y + cpuPaddle.height > ball.y) {
-        ball.velocX *= -1;
+        if (Math.abs(cpuPaddle.x + cpuPaddle.width - ball.x) <= Math.abs(ball.velocX * globalVeloc)) {
+            ball.velocX *= -1;
+        } else {
+            if (ball.y > cpuPaddle.y) {
+                ball.y += globalVeloc;
+                ball.velocY = globalVeloc * 0.2;
+            } else {
+                ball.y -= globalVeloc;
+                ball.velocY = -globalVeloc * 0.2;
+            }
+        }
     }
 
     if(ball.x > canvasWidth) {
