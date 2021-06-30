@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'game font';
+    src: url('fonts/PressStart2P.ttf');
+}
+
 .pongCanvas{
     padding: 0;
     margin: auto;
@@ -10,4 +15,5 @@
     left: 0;
     right: 0;
     border:1px solid black;
+    font-family: 'game font';
 }

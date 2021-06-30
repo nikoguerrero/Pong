@@ -99,9 +99,16 @@ function draw(){
     canvContext.fillRect(cpuPaddle.x, cpuPaddle.y, cpuPaddle.width, cpuPaddle.height);
     canvContext.fillRect(playerPaddle.x, playerPaddle.y, playerPaddle.width, playerPaddle.height);
     canvContext.fillRect(ball.x, ball.y, ball.width, ball.height);
-    canvContext.fillText(cpuPaddle.score, 400, 50);
-    canvContext.fillText(playerPaddle.score, 500, 50);
-    canvContext.font = '30px Consolas';
+    canvContext.font = '48px game font';
+    canvContext.textAlign = 'center';
+    canvContext.fillText(cpuPaddle.score, 400, 80);
+    canvContext.fillText(playerPaddle.score, 500, 80);
+    canvContext.lineWidth = 5;
+    canvContext.beginPath();
+    canvContext.setLineDash([20, 20]);
+    canvContext.moveTo(canvasWidth / 2, 0);
+    canvContext.lineTo(canvasWidth / 2, canvasHeight);
+    canvContext.stroke();
     
 }
 
