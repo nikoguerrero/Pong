@@ -6,9 +6,10 @@ const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 const globalVeloc = 4;
 
+
 let cpuPaddle = {
     x: 30,
-    y: 6,
+    y: canvasHeight / 2 - 45,
     width: 15,
     height: 90,
     velocity: 1,
@@ -17,7 +18,7 @@ let cpuPaddle = {
 
 let playerPaddle = {
     x: 855,
-    y: 6,
+    y: canvasHeight / 2 - 45,
     width: 15, 
     height: 90,
     velocity: 0,
@@ -126,23 +127,26 @@ function restartBall() {
     }
 }
 
-
 function draw(){
-    canvContext.clearRect(0, 0, canvasWidth, canvasHeight);
+    canvContext.fillStyle = 'black';
+    canvContext.fillRect(0, 0, canvasWidth, canvasHeight);
+    canvContext.fillStyle = 'orange';
     canvContext.fillRect(cpuPaddle.x, cpuPaddle.y, cpuPaddle.width, cpuPaddle.height);
     canvContext.fillRect(playerPaddle.x, playerPaddle.y, playerPaddle.width, playerPaddle.height);
+    canvContext.fillStyle = 'white';
     canvContext.fillRect(ball.x, ball.y, ball.width, ball.height);
+    canvContext.fillStyle = 'purple';
     canvContext.font = '48px game font';
     canvContext.textAlign = 'center';
     canvContext.fillText(cpuPaddle.score, canvasWidth / 4, 80);
     canvContext.fillText(playerPaddle.score, canvasWidth / 4 + canvasWidth / 2, 80);
     canvContext.lineWidth = 5;
+    canvContext.strokeStyle = 'white';
     canvContext.beginPath();
     canvContext.setLineDash([20, 20]);
     canvContext.moveTo(canvasWidth / 2, 0);
     canvContext.lineTo(canvasWidth / 2, canvasHeight);
     canvContext.stroke();
-    
 }
 
 function mainLoop() {
@@ -178,5 +182,7 @@ window.addEventListener("load", () => {
     restartBall();
     mainLoop();
 });
+
+
 
 
