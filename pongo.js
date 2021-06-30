@@ -38,12 +38,22 @@ let paddleLimit = {
     bottom: 355
 };
 
-function update() {
-    cpuPaddle.y += cpuPaddle.velocity * globalVeloc;
+let smartness = 1;
+let smartPercentage = 0.5;
 
-    if(cpuPaddle.y > paddleLimit.bottom || cpuPaddle.y < paddleLimit.top) {
-        cpuPaddle.velocity *= -1;
-    }
+function update() {
+
+    if(ball.x + ball.width / 2 < canvasWidth / 3 && ball.velocX < 0) {
+        if(smartness > smartPercentage) {
+            if(ball.y + ball.height / 2 > cpuPaddle.y + cpuPaddle.height / 2 + cpuPaddle.height / 10) {
+                cpuPaddle.y += cpuPaddle.velocity * globalVeloc * 0.8;
+            } else if (ball.y + ball.height / 2 < cpuPaddle.y + cpuPaddle.height / 2 - cpuPaddle.height / 10) {
+                cpuPaddle.y -= cpuPaddle.velocity * globalVeloc * 0.8;
+            }
+        } else {
+            // cpuPaddle.y -= cpuPaddle.velocity * globalVeloc;
+        }
+    } 
 
     playerPaddle.y += playerPaddle.velocity * globalVeloc;
 
@@ -55,6 +65,10 @@ function update() {
 
     ball.x += ball.velocX * globalVeloc;
     ball.y += ball.velocY * globalVeloc;
+
+    if(ball.x < 0) {
+        cpuPaddle.y += cpuPaddle.velocity * globalVeloc;
+    }
 
     if(ball.y > canvasHeight - ball.height || ball.y < 0) {
         ball.velocY *= -1;
@@ -102,11 +116,11 @@ function update() {
 function restartBall() {
     ball.x = canvasWidth / 2 - 7.5;
     ball.y = canvasHeight / 2 - 7.5;
-    ball.velocX = Math.max(Math.random(), 0.8);
+    ball.velocX = Math.max(Math.random(), 1);
     if(Math.random() > 0.5) {
         ball.velocX *= -1;
     }
-    ball.velocY = Math.max(Math.random(), 0.8);
+    ball.velocY = Math.max(Math.random(), 1);
     if(Math.random() > 0.5) {
         ball.velocY *= -1;
     }
