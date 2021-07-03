@@ -5,9 +5,9 @@ let timeUpFunction = null; // será convertido en función
 let shouldTimerStop = false;
 
 //comienza el timer
-const startTimer = (functionTick, functionTimeUp) => {
+const startTimer = (functionTick, functionTimeUp, seconds) => {
     shouldTimerStop = false;
-    counter = 30;
+    counter = seconds;
     tickFunction = functionTick;
     timeUpFunction = functionTimeUp;
     setTimeout(runTimer, 1000);

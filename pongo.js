@@ -1,4 +1,6 @@
-import { startTimer, stopTimer } from "./Timer.js";
+import { startTimer } from "./Timer.js";
+
+const usernameInput = document.getElementById('username');
 
 const canvas = document.getElementById('canvas');
 const canvContext = canvas.getContext('2d');
@@ -41,9 +43,27 @@ let paddleLimit = {
 
 let smartness = 1;
 let smartPercentage = 0.5;
+let firebaseDatabase = null;
+let firebaseDatabaseRef = null;
 
 function init() {
-    startTimer(tick, timeUp);
+    const firebaseConfig = {
+        apiKey: "AIzaSyAFgPlh_ss2rGdxmbqsemLxOiENwLKGSIk",
+        authDomain: "pongo-6a35e.firebaseapp.com",
+        databaseURL: "https://pongo-6a35e-default-rtdb.firebaseio.com",
+        projectId: "pongo-6a35e",
+        storageBucket: "pongo-6a35e.appspot.com",
+        messagingSenderId: "91749878837",
+        appId: "1:91749878837:web:c7ca020ba7ff30958f357c",
+        measurementId: "G-XFGESW5X5B"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    firebaseDatabase = firebase.database();
+    firebaseDatabaseRef = firebaseDatabase.ref('scores');
+
+
+    startTimer(tick, timeUp, 10);
     restartBall();
     mainLoop();
 }
@@ -54,6 +74,18 @@ function tick() {
 
 function timeUp() {
     console.log('time\'s up');
+    saveScore();
+}
+
+function saveScore() {
+    let score = playerPaddle.score;
+
+    let data = {
+        name: usernameInput.value,
+        score: score
+    };
+
+    firebaseDatabaseRef.push(data);
 }
 
 function update() {
@@ -61,9 +93,9 @@ function update() {
     if(ball.x + ball.width / 2 < canvasWidth / 3 && ball.velocX < 0) {
         if(smartness > smartPercentage) {
             if(ball.y + ball.height / 2 > cpuPaddle.y + cpuPaddle.height / 2 + cpuPaddle.height / 10) {
-                cpuPaddle.y += cpuPaddle.velocity * globalVeloc * 0.8;
+                cpuPaddle.y += cpuPaddle.velocity * globalVeloc * 0.5;
             } else if (ball.y + ball.height / 2 < cpuPaddle.y + cpuPaddle.height / 2 - cpuPaddle.height / 10) {
-                cpuPaddle.y -= cpuPaddle.velocity * globalVeloc * 0.8;
+                cpuPaddle.y -= cpuPaddle.velocity * globalVeloc * 1;
             }
         } else {
             // cpuPaddle.y -= cpuPaddle.velocity * globalVeloc;
@@ -119,11 +151,9 @@ function update() {
 
     if(ball.x > canvasWidth) {
         cpuPaddle.score++;
-        console.log(cpuPaddle.score);
         restartBall();
     } else if (ball.x < 0) {
         playerPaddle.score++;
-        console.log(playerPaddle.score);
         restartBall();
     }
 }
