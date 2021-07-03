@@ -1,4 +1,4 @@
-
+import { startTimer, stopTimer } from "./Timer.js";
 
 const canvas = document.getElementById('canvas');
 const canvContext = canvas.getContext('2d');
@@ -41,6 +41,20 @@ let paddleLimit = {
 
 let smartness = 1;
 let smartPercentage = 0.5;
+
+function init() {
+    startTimer(tick, timeUp);
+    restartBall();
+    mainLoop();
+}
+
+function tick() {
+    console.log('tick');
+}
+
+function timeUp() {
+    console.log('time\'s up');
+}
 
 function update() {
 
@@ -179,8 +193,7 @@ window.addEventListener("keyup", (event) => {
 });
 
 window.addEventListener("load", () => {
-    restartBall();
-    mainLoop();
+    init();
 });
 
 
